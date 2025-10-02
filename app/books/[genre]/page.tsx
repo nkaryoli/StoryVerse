@@ -1,6 +1,5 @@
 import { BackgroundGradient } from "@/components/background-gradient";
-import { searchBooks } from "@/components/utils";
-import { Book } from "@/lib/books-utils";
+import { Book, searchBooks } from "@/lib/books-utils";
 import Image from "next/image";
 
 interface PageProps {

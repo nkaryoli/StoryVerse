@@ -1,8 +1,7 @@
 import React from "react";
-import { searchBooks } from "@/components/utils";
 import Image from "next/image";
 import { BackgroundGradient } from "@/components/background-gradient";
-import { Book } from "@/lib/books-utils";
+import { Book, searchBooks } from "@/lib/books-utils";
 
 const generos = [
   "fantasy",
