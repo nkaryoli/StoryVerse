@@ -12,6 +12,18 @@ export interface Movie {
 }
 
 export function MovieCard({ movie }: { movie: Movie }) {
+
+	const safeRating = isNaN(movie.rating) ? 0 : movie.rating;
+
+	const releaseYear = (() => {
+		try {
+			const year = new Date(movie.releaseDate).getFullYear();
+			return isNaN(year) ? 'N/A' : year;
+		} catch {
+			return 'N/A';
+		}
+	})();
+
 	return (
 		<BackgroundGradient className="rounded-lg p-1 h-64 bg-black w-44 relative">
 			{movie.poster ? (
@@ -28,9 +40,9 @@ export function MovieCard({ movie }: { movie: Movie }) {
 							{movie.title}
 						</h3>
 						<div className="flex justify-between items-center mt-1">
-							<span className="text-yellow-400 text-xs">⭐ {movie.rating}</span>
+							<span className="text-yellow-400 text-xs">⭐ {safeRating.toFixed(1)}</span>
 							<span className="text-gray-300 text-xs">
-								{new Date(movie.releaseDate).getFullYear()}
+								{releaseYear}
 							</span>
 						</div>
 					</div>
