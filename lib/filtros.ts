@@ -183,3 +183,80 @@ export const awardWinning = {
   }
 };
 
+ 
+
+
+////********* */
+
+
+//hasta aqui implementado ya
+
+// search by theme
+
+export const thematicCategories = [
+  {
+    name: "Distopías",
+    query: "dystopian",
+    examples: ["1984", "Un mundo feliz", "Fahrenheit 451"],
+  },
+  {
+    name: "Viajes en el Tiempo",
+    query: "time travel",
+    examples: ["La máquina del tiempo", "El fin de la eternidad"],
+  },
+  {
+    name: "Cyberpunk",
+    query: "cyberpunk",
+    examples: ["Neuromante", "Snow Crash"],
+  },
+  {
+    name: "Fantasía Urbana",
+    query: "urban fantasy",
+    examples: ["American Gods", "Neverwhere"],
+  },
+  {
+    name: "Thriller Psicológico",
+    query: "psychological thriller",
+    examples: ["El silencio de los corderos", "Perdida"],
+  },
+  {
+    name: "Romance Histórico",
+    query: "historical romance",
+    examples: ["Orgullo y prejuicio", "Lo que el viento se llevó"],
+  },
+  {
+    name: "No Ficción Creativa",
+    query: "creative nonfiction",
+    examples: ["En el camino", "Ébano"],
+  },
+  {
+    name: "Microhistoria",
+    query: "microhistory",
+    examples: ["Sal", "Cod", "La historia del mundo en 6 tragos"],
+  },
+];
+
+//search by region
+
+export const regionalLiterature = {
+  latinAmerican: {
+    name: "Literatura Latinoamericana",
+    query: "latin american literature",
+    countries: ["Argentina", "México", "Colombia", "Chile", "Perú"],
+  },
+  european: {
+    name: "Literatura Europea",
+    query: "european literature",
+    countries: ["Francia", "Reino Unido", "Alemania", "Italia", "Rusia"],
+  },
+  asian: {
+    name: "Literatura Asiática",
+    query: "asian literature",
+    countries: ["Japón", "China", "India", "Corea"],
+  },
+  african: {
+    name: "Literatura Africana",
+    query: "african literature",
+    countries: ["Nigeria", "Egipto", "Kenia", "Sudáfrica"],
+  },
+};
