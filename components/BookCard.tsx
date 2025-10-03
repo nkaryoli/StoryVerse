@@ -2,15 +2,6 @@ import Image from 'next/image';
 import { BackgroundGradient } from './background-gradient';
 import { Book } from '@/lib/books-utils';
 
-// export interface Movie {
-//     id: number;
-//     title: string;
-//     poster: string | null;
-//     rating: number;
-//     releaseDate: string;
-//     overview: string;
-// }
-
 export function BookCard({ book }: { book: Book }) {
     return (
         <BackgroundGradient className="rounded-lg p-1 h-64 bg-black w-44 relative">
@@ -27,10 +18,10 @@ export function BookCard({ book }: { book: Book }) {
                         <h3 className="text-white font-semibold text-sm line-clamp-2">
                             {book.title}
                         </h3>
-                        <div className="flex justify-between items-center mt-1">
-                            <span className="text-yellow-400 text-xs">⭐ "safeRating.toFixed(1)"</span>
+                        <div className="flex gap-2 items-start mt-1">
+                            <span className="text-secondary text-xs">Autor:</span>
                             <span className="text-gray-300 text-xs">
-                                "releaseYear"
+                                {book.author}
                             </span>
                         </div>
                     </div>
@@ -38,7 +29,7 @@ export function BookCard({ book }: { book: Book }) {
             ) : (
                 <div className="w-full h-full bg-gray-800 rounded-md flex items-center justify-center">
                     <span className="text-white text-sm text-center px-2">
-                        "book.title"
+                        book.title
                     </span>
                 </div>
             )}

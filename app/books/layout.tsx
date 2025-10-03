@@ -1,6 +1,6 @@
 "use client"
 
-import Navbar from '@/components/navbar';
+import CategoryNavbar from '@/components/CategoryNavbar';
 import { BookOpenText, Popcorn } from 'lucide-react';
 import React, { FC, PropsWithChildren } from 'react'
 
@@ -55,7 +55,7 @@ const items = [
 const BooksLayout:FC<PropsWithChildren> = ({ children }) => {
 	return (
 		<div className='flex flex-col'>
-			<Navbar items={items} className=''/>
+			<CategoryNavbar items={items} className=''/>
 
 			{children}
 		</div>
