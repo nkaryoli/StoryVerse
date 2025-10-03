@@ -116,3 +116,25 @@ async function getMockBooks(query: string, limit: number) {
 	}));
 }
 
+export const booksGenres = [
+	"Ficción",
+	"No Ficción", 
+	"Ciencia Ficción",
+	"Fantasía",
+	"Misterio",
+	"Romance",
+	"Terror",
+	"Young Adult",
+	"Biografía",
+	"Historia",
+	"Ciencia",
+	"Tecnología",
+	"Autoayuda",
+	"Negocios",
+	"Arte",
+	"Filosofía",
+	"Poesía",
+	"Teatro",
+	"Viajes",
+	"Cocina"
+];
