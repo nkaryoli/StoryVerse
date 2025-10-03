@@ -16,9 +16,10 @@ interface NavItem {
 interface NavBarProps {
 	items: NavItem[]
 	className?: string
+	primaryColor?: string // Nueva prop opcional
 }
 
-const CategoryNavbar = ({ items, className }: NavBarProps) => {
+const CategoryNavbar = ({ items, className, primaryColor = "#FC3FFA" }: NavBarProps) => {
 	const pathname = usePathname()
 	const [activeTab, setActiveTab] = useState(items[0].name)
 
@@ -42,7 +43,7 @@ const CategoryNavbar = ({ items, className }: NavBarProps) => {
 	return (
 		<div
 			className={cn(
-				"w-full max-w-7xl mx-auto bg-background/80 backdrop-blur-lg  rounded-md shadow-lg",
+				"w-full max-w-7xl mx-auto bg-background/80 backdrop-blur-lg rounded-md shadow-lg",
 				className,
 			)}
 		>
@@ -53,16 +54,35 @@ const CategoryNavbar = ({ items, className }: NavBarProps) => {
 
 					return (
 						<Link
-							key={item.name} // Ahora cada nombre es único
+							key={item.name}
 							href={item.url}
 							onClick={() => setActiveTab(item.name)}
 							className={cn(
 								"relative cursor-pointer text-sm font-medium py-2 px-3 rounded-md transition-colors flex justify-center items-center gap-2",
-								"text-foreground/80 hover:text-primary hover:bg-muted/50 border border-primary/20",
-								isActive && "text-primary"
-							)}
+								"text-foreground/80 hover:bg-muted/50 border "							)}
+							style={{
+								color: isActive ? primaryColor : undefined,
+								borderColor: isActive ? `${primaryColor}20` : undefined
+							}}
+							onMouseEnter={(e) => {
+								// Aplicar color personalizado en hover
+								if (!isActive) {
+									e.currentTarget.style.color = primaryColor;
+								}
+							}}
+							onMouseLeave={(e) => {
+								// Restaurar color original al salir del hover
+								if (!isActive) {
+									e.currentTarget.style.color = '';
+								}
+							}}
+
 						>
-							<Icon size={18} strokeWidth={2.5} />
+							<Icon 
+								size={18} 
+								strokeWidth={2.5} 
+								style={isActive ? { color: primaryColor } : {}}
+							/>
 							<span className="whitespace-nowrap truncate text-xs sm:text-sm">
 								{item.name}
 							</span>
@@ -71,7 +91,11 @@ const CategoryNavbar = ({ items, className }: NavBarProps) => {
 							{isActive && (
 								<motion.div
 									layoutId="active-tab"
-									className="absolute inset-0 w-full bg-primary/10 rounded-md -z-10 border border-primary/20"
+									className="absolute inset-0 w-full rounded-md -z-10 border"
+									style={{
+										backgroundColor: `${primaryColor}10`,
+										borderColor: `${primaryColor}20`
+									}}
 									initial={false}
 									transition={{
 										type: "spring",
@@ -80,9 +104,18 @@ const CategoryNavbar = ({ items, className }: NavBarProps) => {
 									}}
 								>
 									{/* Efecto de "lámpara" solo en pantallas grandes */}
-									<div className="hidden sm:block absolute -top-2 left-1/2 -translate-x-1/2 w-6 h-1 bg-primary rounded-t-full">
-										<div className="absolute w-8 h-4 bg-primary/20 rounded-full blur-sm -top-1 -left-1" />
-										<div className="absolute w-6 h-4 bg-primary/20 rounded-full blur-sm -top-0.5" />
+									<div 
+										className="absolute -top-2 left-1/2 -translate-x-1/2 w-6 h-1 rounded-t-full"
+										style={{ backgroundColor: primaryColor }}
+									>
+										<div 
+											className="absolute w-8 h-4 rounded-full blur-sm -top-1 -left-1"
+											style={{ backgroundColor: `${primaryColor}20` }}
+										/>
+										<div 
+											className="absolute w-6 h-4 rounded-full blur-sm -top-0.5"
+											style={{ backgroundColor: `${primaryColor}20` }}
+										/>
 									</div>
 								</motion.div>
 							)}

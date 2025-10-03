@@ -4,7 +4,7 @@ import { Book } from '@/lib/books-utils';
 
 export function BookCard({ book }: { book: Book }) {
     return (
-        <BackgroundGradient className="rounded-lg p-1 h-60 sm:h-64 bg-black w-40 sm:w-44 relative">
+        <BackgroundGradient className="rounded-lg p-1 h-60 sm:h-64 bg-black w-40 sm:w-44 relative" variant='pink'>
             {book.cover ? (
                 <div className="relative w-full h-full">
                     <Image

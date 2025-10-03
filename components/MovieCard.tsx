@@ -24,7 +24,7 @@ export function MovieCard({ movie }: { movie: Movie }) {
 	})();
 
 	return (
-		<BackgroundGradient className="rounded-lg p-1 h-64 bg-black w-44 relative">
+		<BackgroundGradient className="rounded-lg p-1 h-64 bg-black w-44 relative" variant='blue'>
 			{movie.poster ? (
 				<div className="relative w-full h-full">
 					<Image
