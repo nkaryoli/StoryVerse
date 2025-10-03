@@ -10,7 +10,7 @@ const BooksPage = async () => {
   const allBooks = allBooksResults.flat();
 
   return (
-    <section className="w-fit space-y-9 m-auto pt-9">
+    <section className="w-fit space-y-9 m-auto">
       <h1 className="text-3xl font-bold text-white capitalize">Todos los Libros</h1>
       <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4 md:gap-6">         {allBooks.map((book: Book, index: number) => (
         <BookCard

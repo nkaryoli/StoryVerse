@@ -1,11 +1,12 @@
 "use client"
 import React from 'react';
-import { Grid2x2PlusIcon, MenuIcon, SearchIcon } from 'lucide-react';
+import { MenuIcon, SearchIcon } from 'lucide-react';
 import { Sheet, SheetContent, SheetFooter } from '@/components/ui/sheet';
 import { Button, buttonVariants } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 import { CommandItem, SearchModal } from '@/components/search-modal';
 import Link from 'next/link';
+import Image from 'next/image';
 
 export function Header() {
 	const [open, setOpen] = React.useState(false);
@@ -29,8 +30,11 @@ export function Header() {
 			)}
 		>
 			<nav className="mx-auto flex h-14 w-full max-w-7xl items-center justify-between">
-				<Link href="/" className="hover:bg-accent flex cursor-pointer items-center gap-2 rounded-md px-2 py-1 duration-100">
-					<Grid2x2PlusIcon className="size-6" />
+				<Link href="/" className="hover:bg-accent flex cursor-pointer items-center gap-2 rounded-md px-3 py-1 duration-100">
+					<Image src="/logoStory.svg" alt={''}
+						width={40}
+						height={30}
+					/>
 					<p className="font-mono text-lg font-bold">StoryVerse</p>
 				</Link>
 				<div className="flex items-center gap-2">
