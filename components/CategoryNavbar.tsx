@@ -1,10 +1,11 @@
 "use client"
 
-import React, { useEffect, useState } from "react"
+import React, { useState, useEffect } from "react"
 import { motion } from "framer-motion"
 import Link from "next/link"
 import { LucideIcon } from "lucide-react"
 import { cn } from "@/lib/utils"
+import { usePathname } from "next/navigation"
 
 interface NavItem {
 	name: string
@@ -18,51 +19,59 @@ interface NavBarProps {
 }
 
 const CategoryNavbar = ({ items, className }: NavBarProps) => {
-
+	const pathname = usePathname()
 	const [activeTab, setActiveTab] = useState(items[0].name)
-	const [, setIsMobile] = useState(false)
 
+	// Sincronizar el tab activo con la URL actual
 	useEffect(() => {
-		const handleResize = () => {
-			setIsMobile(window.innerWidth < 768)
-		}
+		const sortedItems = [...items].sort((a, b) => b.url.length - a.url.length)
 
-		handleResize()
-		window.addEventListener("resize", handleResize)
-		return () => window.removeEventListener("resize", handleResize)
-	}, [])
+		const currentItem = sortedItems.find(item => {
+			if (item.name === "Todos") {
+				return (pathname === item.url);
+			}
+			return (pathname === item.url || pathname.startsWith(item.url + '/'));
+		})
+		if (currentItem) {
+			setActiveTab(currentItem.name)
+			console.log("active tab: ", currentItem.name);
+		}
+		console.log("current path:", pathname);
+	}, [pathname, items])
 
 	return (
 		<div
 			className={cn(
-				"fixed bottom-0 sm:top-14 left-[50svw] -translate-x-1/2 z-50 mb-6 sm:pt-[2.5svh]",
+				"w-full max-w-7xl mx-auto bg-background/80 backdrop-blur-lg  rounded-md shadow-lg",
 				className,
 			)}
 		>
-			<div className="flex items-center gap-3 w-fit m-auto bg-background/75 border border-border backdrop-blur-lg py-1 px-1 rounded-full shadow-lg">
+			<div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6 xl:grid-cols-9 gap-2">
 				{items.map((item) => {
 					const Icon = item.icon
 					const isActive = activeTab === item.name
 
 					return (
 						<Link
-							key={item.name}
+							key={item.name} // Ahora cada nombre es único
 							href={item.url}
 							onClick={() => setActiveTab(item.name)}
 							className={cn(
-								"relative cursor-pointer text-sm font-semibold px-6 py-2 rounded-full transition-colors",
-								"text-foreground/80 hover:text-primary",
-								isActive && "bg-muted text-primary",
+								"relative cursor-pointer text-sm font-medium py-2 px-3 rounded-md transition-colors flex justify-center items-center gap-2",
+								"text-foreground/80 hover:text-primary hover:bg-muted/50 border border-primary/20",
+								isActive && "text-primary"
 							)}
 						>
-							<span className="hidden md:inline">{item.name}</span>
-							<span className="md:hidden">
-								<Icon size={18} strokeWidth={2.5} />
+							<Icon size={18} strokeWidth={2.5} />
+							<span className="whitespace-nowrap truncate text-xs sm:text-sm">
+								{item.name}
 							</span>
+
+							{/* Efecto activo animado */}
 							{isActive && (
 								<motion.div
-									layoutId="lamp"
-									className="absolute inset-0 w-full bg-primary/5 rounded-full -z-10"
+									layoutId="active-tab"
+									className="absolute inset-0 w-full bg-primary/10 rounded-md -z-10 border border-primary/20"
 									initial={false}
 									transition={{
 										type: "spring",
@@ -70,10 +79,10 @@ const CategoryNavbar = ({ items, className }: NavBarProps) => {
 										damping: 30,
 									}}
 								>
-									<div className="absolute -top-2 left-1/2 -translate-x-1/2 w-8 h-1 bg-primary rounded-t-full">
-										<div className="absolute w-12 h-6 bg-primary/20 rounded-full blur-md -top-2 -left-2" />
-										<div className="absolute w-8 h-6 bg-primary/20 rounded-full blur-md -top-1" />
-										<div className="absolute w-4 h-4 bg-primary/20 rounded-full blur-sm top-0 left-2" />
+									{/* Efecto de "lámpara" solo en pantallas grandes */}
+									<div className="hidden sm:block absolute -top-2 left-1/2 -translate-x-1/2 w-6 h-1 bg-primary rounded-t-full">
+										<div className="absolute w-8 h-4 bg-primary/20 rounded-full blur-sm -top-1 -left-1" />
+										<div className="absolute w-6 h-4 bg-primary/20 rounded-full blur-sm -top-0.5" />
 									</div>
 								</motion.div>
 							)}
@@ -85,4 +94,4 @@ const CategoryNavbar = ({ items, className }: NavBarProps) => {
 	)
 }
 
-export default CategoryNavbar;
+export default CategoryNavbar

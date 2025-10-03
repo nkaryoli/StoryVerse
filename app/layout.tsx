@@ -13,9 +13,9 @@ const RootLayout:FC<PropsWithChildren> = ({ children }) => {
         className={`${roboto.className} antialiased`}
       >
         <Header />
-          <main className="w-full max-w-8xl mx-auto mt-24">
-            {children}
-          </main>
+        <main className="w-full max-w-7xl mx-auto">
+          {children}
+        </main>
       </body>
     </html>
   );

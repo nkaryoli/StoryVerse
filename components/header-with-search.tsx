@@ -28,7 +28,7 @@ export function Header() {
 				'bg-background/95 supports-[backdrop-filter]:bg-background/80',
 			)}
 		>
-			<nav className="mx-auto flex h-14 w-full max-w-7xl items-center justify-between px-4">
+			<nav className="mx-auto flex h-14 w-full max-w-7xl items-center justify-between">
 				<Link href="/" className="hover:bg-accent flex cursor-pointer items-center gap-2 rounded-md px-2 py-1 duration-100">
 					<Grid2x2PlusIcon className="size-6" />
 					<p className="font-mono text-lg font-bold">StoryVerse</p>
