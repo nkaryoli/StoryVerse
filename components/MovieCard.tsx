@@ -1,4 +1,3 @@
-// components/MovieCard.tsx
 import Image from 'next/image';
 import { BackgroundGradient } from './background-gradient';
 
