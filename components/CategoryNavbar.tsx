@@ -17,7 +17,7 @@ interface NavBarProps {
 	className?: string
 }
 
-const Navbar = ({ items, className }: NavBarProps) => {
+const CategoryNavbar = ({ items, className }: NavBarProps) => {
 
 	const [activeTab, setActiveTab] = useState(items[0].name)
 	const [, setIsMobile] = useState(false)
@@ -35,8 +35,8 @@ const Navbar = ({ items, className }: NavBarProps) => {
 	return (
 		<div
 			className={cn(
-				"z-50 mb-6 sm:pt-[2.5svh]",
-				// "fixed bottom-0 sm:top-0 left-[55svw] -translate-x-1/2 z-50 mb-6 sm:pt-[2.5svh]",
+				// //"z-50 mb-6 sm:pt-[2.5svh]",
+				"fixed bottom-0 sm:top-0 left-[50svw] -translate-x-1/2 z-50 mb-6 sm:pt-[2.5svh]",
 				className,
 			)}
 		>
@@ -86,4 +86,4 @@ const Navbar = ({ items, className }: NavBarProps) => {
 	)
 }
 
-export default Navbar;
+export default CategoryNavbar;
