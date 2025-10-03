@@ -8,23 +8,25 @@ const MoviesPage = async () => {
 
 	const allMoviesResults = await Promise.all(allMoviesPromises);
 
+	const allMovies = allMoviesResults.flat();
+	const shuffledMovies = [...allMovies].sort(() => Math.random() - 0.5);
+
 	return (
 		<div className="space-y-12 p-6">
-			{movieGenres.map((genre, genreIndex) => (
-				<section key={genre.id} className="space-y-6">
-					<h2 className="text-2xl font-bold text-white capitalize">
-						{genre.name}
-					</h2>
-					<div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 2xl:grid-cols-5  gap-6">
-						{allMoviesResults[genreIndex]?.map((movie: Movie) => (
-							<MovieCard
-								movie={movie}
-								key={movie.id || `movie-${genre.id}-${movie.title}`}
-							/>
-						))}
-					</div>
-				</section>
-			))}
+			<section className="space-y-6">
+				<h2 className="text-2xl font-bold text-white capitalize">
+					Todas las Películas
+				</h2>
+				<div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4 md:gap-6">
+					{shuffledMovies.map((movie: Movie) => (
+						<MovieCard
+							movie={movie}
+							key={movie.id || `movie-${movie.title}`}
+						/>
+					))}
+				</div>
+			</section>
+
 		</div>
 	);
 };

@@ -19,7 +19,7 @@ export function BookCard({ book }: { book: Book }) {
                             {book.title}
                         </h3>
                         <div className="flex gap-2 items-start mt-1">
-                            <span className="text-secondary text-xs">Autor:</span>
+                            <span className="text-primary text-xs">Autor:</span>
                             <span className="text-gray-300 text-xs">
                                 {book.author}
                             </span>
