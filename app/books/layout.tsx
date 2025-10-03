@@ -115,7 +115,7 @@ const items = [
 
 const BooksLayout: FC<PropsWithChildren> = ({ children }) => {
 	return (
-		<div className='flex flex-col p-3 space-y-9'>
+		<div className='flex flex-col p-3 lg:pt-16 space-y-16'>
 			<CategoryNavbar items={items}/>
 			{children}
 		</div>

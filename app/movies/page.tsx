@@ -12,8 +12,7 @@ const MoviesPage = async () => {
 	const shuffledMovies = [...allMovies].sort(() => Math.random() - 0.5);
 
 	return (
-		<div className="space-y-12 p-6">
-			<section className="space-y-6">
+    <section className="w-fit space-y-9 m-auto">
 				<h2 className="text-2xl font-bold text-white capitalize">
 					Todas las Películas
 				</h2>
@@ -27,7 +26,6 @@ const MoviesPage = async () => {
 				</div>
 			</section>
 
-		</div>
 	);
 };
 

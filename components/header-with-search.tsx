@@ -29,7 +29,7 @@ export function Header() {
 				'bg-background/95 supports-[backdrop-filter]:bg-background/80',
 			)}
 		>
-			<nav className="mx-auto flex h-14 w-full max-w-7xl items-center justify-between">
+			<nav className="mx-auto flex h-14 w-full max-w-7xl items-center justify-between lg;px-6">
 				<Link href="/" className="hover:bg-accent flex cursor-pointer items-center gap-2 rounded-md px-3 py-1 duration-100">
 					<Image src="/logoStory.svg" alt={''}
 						width={40}
@@ -55,7 +55,7 @@ export function Header() {
 							size="icon"
 							variant="outline"
 							onClick={() => setOpen(!open)}
-							className="lg:hidden"
+							className="lg:hidden mr-3"
 						>
 							<MenuIcon className="size-4" />
 						</Button>
@@ -78,8 +78,6 @@ export function Header() {
 								))}
 							</div>
 							<SheetFooter>
-								{/* <Button variant="outline">Sign In</Button>
-								<Button>Get Started</Button> */}
 							</SheetFooter>
 						</SheetContent>
 					</Sheet>

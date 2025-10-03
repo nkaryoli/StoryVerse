@@ -43,7 +43,7 @@ const CategoryNavbar = ({ items, className, primaryColor = "#FC3FFA" }: NavBarPr
 	return (
 		<div
 			className={cn(
-				"w-full max-w-7xl mx-auto bg-background/80 backdrop-blur-lg rounded-md shadow-lg",
+				"w-full max-w-6xl  mx-auto bg-background/80 backdrop-blur-lg rounded-md shadow-lg",
 				className,
 			)}
 		>

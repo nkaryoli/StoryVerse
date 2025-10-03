@@ -65,7 +65,7 @@ const items = [
 
 const MoviesLayout: FC<PropsWithChildren> = ({ children }) => {
 	return (
-		<div className='flex flex-col p-3 space-y-9'>
+		<div className='flex flex-col p-3 lg:pt-16 space-y-16'>
 			<CategoryNavbar items={items} primaryColor='#41C5FE'/>
 			{children}
 		</div>
