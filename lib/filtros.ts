@@ -1,25 +1,4 @@
-export const popularCategories = [
-  "Ficción",
-  "No Ficción", 
-  "Ciencia Ficción",
-  "Fantasía",
-  "Misterio",
-  "Romance",
-  "Terror",
-  "Young Adult",
-  "Biografía",
-  "Historia",
-  "Ciencia",
-  "Tecnología",
-  "Autoayuda",
-  "Negocios",
-  "Arte",
-  "Filosofía",
-  "Poesía",
-  "Teatro",
-  "Viajes",
-  "Cocina"
-];
+
 
 
 export const bookCategories = {

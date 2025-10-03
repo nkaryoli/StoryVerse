@@ -1,6 +1,8 @@
 import { FC, PropsWithChildren } from "react";
 import "./globals.css";
 import { Roboto } from "next/font/google";
+import { Header } from "@/components/header-with-search";
+
 
 const roboto = Roboto({subsets: ["latin"], weight: ["300", "400", "500", "700"]});
 
@@ -10,8 +12,8 @@ const RootLayout:FC<PropsWithChildren> = ({ children }) => {
       <body
         className={`${roboto.className} antialiased`}
       >
-          {/* <main className="fixed top-[5svh] left-[26vw] right-30 bottom-[5svh] border rounded-xl shadow overflow-y-auto p-6 flex justify-center"> */}
-          <main className="p-20">
+        <Header />
+          <main className="w-full max-w-8xl mx-auto mt-24">
             {children}
           </main>
       </body>

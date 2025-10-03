@@ -11,7 +11,7 @@ const BooksPage = async () => {
 
   return (
     <section className="w-fit space-y-6 m-auto">
-      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 2xl:grid-cols-5 gap-6">
+      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 2xl:grid-cols-7 gap-3 md:gap-6">
         {allBooks.map((book: Book, index: number) => (
           <BookCard
             book={book}

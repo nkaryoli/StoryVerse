@@ -35,12 +35,11 @@ const CategoryNavbar = ({ items, className }: NavBarProps) => {
 	return (
 		<div
 			className={cn(
-				// //"z-50 mb-6 sm:pt-[2.5svh]",
-				"fixed bottom-0 sm:top-0 left-[50svw] -translate-x-1/2 z-50 mb-6 sm:pt-[2.5svh]",
+				"fixed bottom-0 sm:top-14 left-[50svw] -translate-x-1/2 z-50 mb-6 sm:pt-[2.5svh]",
 				className,
 			)}
 		>
-			<div className="flex items-center gap-3 w-fit m-auto bg-background/5 border border-border backdrop-blur-lg py-1 px-1 rounded-full shadow-lg">
+			<div className="flex items-center gap-3 w-fit m-auto bg-background/75 border border-border backdrop-blur-lg py-1 px-1 rounded-full shadow-lg">
 				{items.map((item) => {
 					const Icon = item.icon
 					const isActive = activeTab === item.name
