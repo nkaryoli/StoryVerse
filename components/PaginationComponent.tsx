@@ -3,7 +3,7 @@
 import { useRouter } from 'next/navigation';
 import React from 'react'
 import { ChevronLeft, ChevronRight } from 'lucide-react';
-import { Pagination, PaginationContent, PaginationEllipsis, PaginationItem } from './pagination';
+import { Pagination, PaginationContent, PaginationEllipsis, PaginationItem } from './Pagination';
 import { Button } from './button-1';
 
 interface PaginationProps {
