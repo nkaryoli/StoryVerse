@@ -19,11 +19,11 @@ interface NavBarProps {
 }
 
 import {
-	BookText, Clapperboard, ChefHat, Quote, Brain, Palette, TrendingUp, HeartHandshake, Cpu, Microscope, Ghost, Users, Map as MapIcon, List, Sparkles, BookOpen, Rocket, HatGlasses, Heart, Calendar, UserCircle, LucideIcon
+	BookText, Clapperboard, ChefHat, Quote, Brain, Palette, TrendingUp, HeartHandshake, Cpu, Microscope, Ghost, Users, Map as MapIcon, Star, Sparkles, BookOpen, Rocket, HatGlasses, Heart, Calendar, UserCircle, LucideIcon
 } from 'lucide-react';
 
 const ICON_MAP: Record<string, unknown> = {
-	BookText, Clapperboard, ChefHat, Quote, Brain, Palette, TrendingUp, HeartHandshake, Cpu, Microscope, Ghost, Users, MapIcon, List, Sparkles, BookOpen, Rocket, HatGlasses, Heart, Calendar, UserCircle
+	BookText, Clapperboard, ChefHat, Quote, Brain, Palette, TrendingUp, HeartHandshake, Cpu, Microscope, Ghost, Users, MapIcon, Star, Sparkles, BookOpen, Rocket, HatGlasses, Heart, Calendar, UserCircle
 };
 
 const CategoryNavbar = ({ items, className, primaryColor = "#FC3FFA" }: NavBarProps) => {

@@ -272,9 +272,9 @@ export const booksGenres = [
 
 export const bookFilters: FilterItem[] = [
 	{
-		name: "Todos",
+		name: "Populares",
 		url: "/books",
-		icon: "List",
+		icon: "Star",
 	},
 	{
 		name: "Fantasia",

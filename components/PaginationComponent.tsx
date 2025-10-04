@@ -9,24 +9,33 @@ import { Button } from './button-1';
 interface PaginationProps {
 	currentPage: number;
 	hasMore: boolean;
-	totalBooks: number;
+	totalItems: number;
+	itemsPerPage: number;
 	library: string;
 	genre: string;
 }
 
-export function PaginationComponent({ currentPage, hasMore, totalBooks, library, genre }: PaginationProps) {
+export function PaginationComponent({ currentPage, hasMore, totalItems, itemsPerPage, library, genre }: PaginationProps) {
 	const router = useRouter();
 
 	const handlePageChange = (newPage: number) => {
-		router.push(`/${library}/${genre}?page=${newPage}`);
+		if (genre === "populares" || genre === "trending") {
+			router.push(`/${library}?page=${newPage}`);
+		} else {
+			router.push(`/${library}/${genre}?page=${newPage}`);
+		}
 	};
 
-	const booksPerPage = 24;
-	const startBook = (currentPage - 1) * booksPerPage + 1;
-	const endBook = Math.min(currentPage * booksPerPage, totalBooks);
+	// Calcular correctamente usando itemsPerPage
+	const startItem = (currentPage - 1) * itemsPerPage + 1;
+	const endItem = Math.min(currentPage * itemsPerPage, totalItems);
+	const totalPages = Math.ceil(totalItems / itemsPerPage);
 
-	// Calcular páginas para mostrar
-	const totalPages = Math.ceil(totalBooks / booksPerPage);
+	// Solo mostrar paginación si hay más de una página
+	if (totalPages <= 1) {
+		return null;
+	}
+
 	const maxVisiblePages = 5;
 
 	const getVisiblePages = () => {
@@ -53,7 +62,7 @@ export function PaginationComponent({ currentPage, hasMore, totalBooks, library,
 		<div className="flex flex-col items-center gap-4 mt-8">
 			{/* Información de paginación */}
 			<p className="text-gray-300 text-sm">
-				Mostrando {startBook}-{endBook} de {totalBooks} libros
+				Mostrando {startItem}-{endItem} de {totalItems} {library === 'books' ? 'libros' : 'películas'}
 			</p>
 
 			{/* Componente de paginación personalizado */}

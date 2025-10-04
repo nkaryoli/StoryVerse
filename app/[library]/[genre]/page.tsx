@@ -21,6 +21,7 @@ const Category = async ({ params, searchParams }: PageProps) => {
 	const { library, genre } = resolvedParams;
 
 	const currentPage = parseInt(resolvedSearchParams.page || '1');
+	const itemsPerPage = 24;
 
 	console.log('🔄 [CATEGORY] Renderizando página:', { library, genre, currentPage });
 
@@ -52,7 +53,8 @@ const Category = async ({ params, searchParams }: PageProps) => {
 				<PaginationComponent
 					currentPage={currentPage}
 					hasMore={hasMore}
-					totalBooks={totalBooks}
+					totalItems={totalBooks}
+					itemsPerPage={itemsPerPage}
 					library={library}
 					genre={genre}
 				/>
@@ -76,7 +78,8 @@ const Category = async ({ params, searchParams }: PageProps) => {
 				<PaginationComponent 
 					currentPage={currentPage}
 					hasMore={hasMore}
-					totalBooks={totalMovies} // El componente usa totalBooks pero funciona igual
+					totalItems={totalMovies}
+					itemsPerPage={itemsPerPage}
 					library={library}
 					genre={genre}
 				/>

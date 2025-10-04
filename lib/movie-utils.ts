@@ -41,7 +41,7 @@ const TMDB_BASE_URL = process.env.TMDB_BASE_URL;
 
 export async function searchMovies(
 	genreName: string,
-	limit: number = 20,
+	limit: number = 50,
 	page: number = 1
 ): Promise<MoviesResponse> {
 	if (!TMDB_API_KEY) {
@@ -257,15 +257,15 @@ export type FilterItem = {
 };
 
 export const movieFilters: FilterItem[] = [
-	{ name: "Todos", url: "/movies", icon: "List" },
+	{ name: "Trending", url: "/movies", icon: "Star" },
 	{ name: "Acción", url: "/movies/accion", icon: "Sparkles" },
 	{ name: "Aventura", url: "/movies/aventura", icon: "BookOpen" },
 	{ name: "Animacion", url: "/movies/animacion", icon: "Rocket" },
 	{ name: "Comedia", url: "/movies/comedia", icon: "HatGlasses" },
 	{ name: "Crimen", url: "/movies/crimen", icon: "Heart" },
 	{ name: "Drama", url: "/movies/drama", icon: "Calendar" },
-	{ name: "Fantasia", url: "/movies/fantasia", icon: "UserCircle" },
-	{ name: "Terror", url: "/movies/terror", icon: "UserCircle" },
-	{ name: "Romance", url: "/movies/romance", icon: "UserCircle" },
-	{ name: "Ciencia Ficción", url: "/movies/ciencia-ficcion", icon: "UserCircle" },
+	{ name: "Fantasia", url: "/movies/fantasia", icon: "Sparkles" },
+	{ name: "Terror", url: "/movies/terror", icon: "Ghost" },
+	{ name: "Romance", url: "/movies/romance", icon: "Heart" },
+	{ name: "Ciencia Ficción", url: "/movies/ciencia-ficcion", icon: "Rocket" },
 ];
