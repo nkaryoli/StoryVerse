@@ -1,6 +1,6 @@
 import { BookCard } from '@/components/BookCard';
 import { Movie, MovieCard } from '@/components/MovieCard';
-import { Book, booksGenres, searchBooks } from '@/lib/books-utils';
+import { Book, booksGenres, BooksResponse, searchBooksByGenre } from '@/lib/books-utils';
 import { movieGenres, searchMovies } from '@/lib/movie-utils';
 import React from 'react'
 
@@ -16,10 +16,10 @@ const Library = async ({ params }: PageProps) => {
 	
 	if (libraryParam === 'books') {
 
-		const libraryPromises = booksGenres.map((genre) => searchBooks(genre, 5));
-		const libraryResults = await Promise.all(libraryPromises);
+		const libraryPromises = booksGenres.map((genre) => searchBooksByGenre(genre, 5));
+		const libraryResults: BooksResponse[] = await Promise.all(libraryPromises);
 
-		const books = libraryResults.flat();
+		const books = libraryResults.flatMap(response => response.books);
 		const completeLibrary = [...books].sort(() => Math.random() -0.5);
 
 		return (

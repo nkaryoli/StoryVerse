@@ -10,6 +10,13 @@ export type Book = {
 	key: string;
 }
 
+export interface BooksResponse {
+	books: Book[];
+	currentPage: number;
+	hasMore: boolean;
+	totalBooks: number;
+}
+
 export interface OpenLibraryBook {
 	title: string;
 	author_name?: string[];
@@ -21,7 +28,7 @@ export interface OpenLibraryBook {
 
 // search by categories
 
-export async function searchBooksByGenre(query: string, limit: number = 50) {
+export async function searchBooksByGenre(query: string, limit: number = 50, page: number = 1): Promise<BooksResponse> {
 	try {
 		// Pequeña pausa para no saturar la API
 		await new Promise(resolve => setTimeout(resolve, 500));
@@ -51,33 +58,41 @@ export async function searchBooksByGenre(query: string, limit: number = 50) {
 		};
 
 		// Buscamos el género en nuestro mapeo
-		const openLibraryGenre = genreMap[query] || query;
+		const searchTerm = genreMap[query] || query;
 
-		// URL específica para géneros
+		const offset = (page - 1) * limit;
+
+		// Usar search.json en lugar de subjects para paginación real
 		const response = await fetch(
-			`https://openlibrary.org/subjects/${openLibraryGenre}.json?limit=100`,
-			{ signal: AbortSignal.timeout(15000) }
+			`https://openlibrary.org/search.json?subject=${encodeURIComponent(searchTerm)}&limit=${limit}&offset=${offset}`,
+			{
+				signal: AbortSignal.timeout(15000),
+				cache: 'no-store'
+			}
 		);
-
 		if (response.ok) {
 			const data = await response.json();
-			const works = data.works || [];
+			const docs = data.docs || [];
 
-			console.log(`📚 Encontrados ${works.length} libros de ${query}`);
+			console.log(`📚 Página ${page}: ${docs.length} libros de ${query}`);
 
-			const books = works.map((work: any) => ({
-				title: work.title,
-				author: work.authors?.[0]?.name || "Autor desconocido",
-				cover: work.cover_id 
-					? `https://covers.openlibrary.org/b/id/${work.cover_id}-M.jpg`
+			const books: Book[] = docs.map((doc: any) => ({
+				title: doc.title,
+				author: doc.author_name?.[0] || "Autor desconocido",
+				cover: doc.cover_i
+					? `https://covers.openlibrary.org/b/id/${doc.cover_i}-M.jpg`
 					: null,
-				publishYear: work.first_publish_year,
-				isbn: work.availability?.isbn || null,
-				key: work.key,
+				publishYear: doc.first_publish_year || null,
+				isbn: doc.isbn?.[0] || null,
+				key: doc.key,
 			}));
-			
-			// La respuesta de /subjects es diferente, usa "works"
-			return  books.slice(0, limit);
+
+			return {
+				books,
+				currentPage: page,
+				hasMore: docs.length === limit,
+				totalBooks: data.num_found || docs.length
+			};
 		} else {
 			throw new Error(`Error HTTP: ${response.status}`);
 		}
@@ -88,7 +103,7 @@ export async function searchBooksByGenre(query: string, limit: number = 50) {
 	}
 }
 
-export async function searchBooks(query: string, limit: number = 10) {
+export async function searchBooks(query: string, limit: number = 10): Promise<BooksResponse> {
 	try {
 		// Delay aleatorio entre peticiones para evitar rate limiting de Open Library API
 		// y no cierre las conexiones por hacer demasiadas peticiones en poco tiempo
@@ -127,9 +142,7 @@ export async function searchBooks(query: string, limit: number = 10) {
 	return getMockBooks(query, limit);
 }
 
-async function getMockBooks(query: string, limit: number) {
-	// await new Promise(resolve => setTimeout(resolve, 800));
-
+async function getMockBooks(query: string, limit: number, page: number = 1): Promise<BooksResponse> {
 	const mockBooks = {
 		fantasy: [
 			{ title: "The Lord of the Rings", author: "J.R.R. Tolkien", coverId: 1 },
@@ -175,24 +188,63 @@ async function getMockBooks(query: string, limit: number) {
 			{ title: "The Catcher in the Rye", author: "J.D. Salinger", coverId: 19 },
 			{ title: "The Alchemist", author: "Paulo Coelho", coverId: 20 },
 		],
+		scifi: [
+			{ title: "Dune", author: "Frank Herbert", coverId: 21 },
+			{ title: "Foundation", author: "Isaac Asimov", coverId: 22 },
+			{ title: "Neuromancer", author: "William Gibson", coverId: 23 },
+			{ title: "The Martian", author: "Andy Weir", coverId: 24 },
+			{ title: "Snow Crash", author: "Neal Stephenson", coverId: 25 },
+		],
+		history: [
+			{ title: "Sapiens", author: "Yuval Noah Harari", coverId: 26 },
+			{ title: "Guns, Germs, and Steel", author: "Jared Diamond", coverId: 27 },
+			{ title: "A People's History", author: "Howard Zinn", coverId: 28 },
+			{ title: "The Silk Roads", author: "Peter Frankopan", coverId: 29 },
+			{ title: "1491", author: "Charles C. Mann", coverId: 30 },
+		],
+		biography: [
+			{ title: "Steve Jobs", author: "Walter Isaacson", coverId: 31 },
+			{ title: "Einstein: His Life", author: "Walter Isaacson", coverId: 32 },
+			{ title: "The Diary of Anne Frank", author: "Anne Frank", coverId: 33 },
+			{ title: "I Know Why the Caged Bird Sings", author: "Maya Angelou", coverId: 34 },
+			{ title: "Long Walk to Freedom", author: "Nelson Mandela", coverId: 35 },
+		],
+		business: [
+			{ title: "The Lean Startup", author: "Eric Ries", coverId: 36 },
+			{ title: "Good to Great", author: "Jim Collins", coverId: 37 },
+			{ title: "The 7 Habits", author: "Stephen Covey", coverId: 38 },
+			{ title: "Thinking, Fast and Slow", author: "Daniel Kahneman", coverId: 39 },
+			{ title: "The Innovator's Dilemma", author: "Clayton Christensen", coverId: 40 },
+		],
 	};
 
-	const books =
+	const booksArray =
 		mockBooks[query as keyof typeof mockBooks] ||
-		Array.from({ length: 5 }, (_, i) => ({
-			title: `${query} Book ${i + 1}`,
+		Array.from({ length: Math.min(limit, 10) }, (_, i) => ({
+			title: `${query.charAt(0).toUpperCase() + query.slice(1)} Book ${i + 1}`,
 			author: `Author ${i + 1}`,
 			coverId: i + 100,
 		}));
 
-	return books.slice(0, limit).map((book, index) => ({
+	const slicedBooks = booksArray.slice(0, limit);
+
+	// Convertir al tipo Book[]
+	const books: Book[] = slicedBooks.map((book, index) => ({
 		title: book.title,
 		author: book.author,
 		cover: `https://picsum.photos/200/300?random=${book.coverId}`,
-		publishYear: 2000 + index,
+		publishYear: 1990 + (index % 30),
 		isbn: `978-${index.toString().padStart(10, "0")}`,
-		key: `mock-${query}-${index}`,
+		key: `mock-${query}-${index}-${Date.now()}`,
 	}));
+
+	// Devolver el tipo BooksResponse completo
+	return {
+		books: books,
+		currentPage: page,
+		hasMore: books.length === limit, // Simular que hay más páginas si llegamos al límite
+		totalBooks: booksArray.length * 3 // Simular un total mayor para paginación
+	};
 }
 
 export const booksGenres = [
