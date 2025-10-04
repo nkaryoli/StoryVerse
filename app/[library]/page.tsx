@@ -1,7 +1,7 @@
 import { BookCard } from '@/components/BookCard';
 import { Movie, MovieCard } from '@/components/MovieCard';
 import { Book, booksGenres, BooksResponse, searchBooksByGenre } from '@/lib/books-utils';
-import { movieGenres, searchMovies } from '@/lib/movie-utils';
+import { movieGenres, MoviesResponse, searchMovies } from '@/lib/movie-utils';
 import React from 'react'
 
 interface PageProps {
@@ -37,11 +37,18 @@ const Library = async ({ params }: PageProps) => {
 		)
 	} else if (libraryParam === 'movies') {
 		
-		const libraryPromises = movieGenres.map((genre) => searchMovies(genre.name, 5));
-		const libraryResults = await Promise.all(libraryPromises);
+		const libraryPromises = movieGenres.map((genre) => searchMovies(genre.name, 5, 1));
+		const libraryResults: MoviesResponse[] = await Promise.all(libraryPromises);
 
-		const movies = libraryResults.flat();
-		const completeLibrary = [...movies].sort(() => Math.random() -0.5);
+		// Extraer las películas de cada MoviesResponse
+		const allMovies = libraryResults.flatMap(response => response.movies);
+
+		// Eliminar películas duplicadas por ID
+		const uniqueMovies = allMovies.filter((movie, index, self) => 
+			index === self.findIndex(m => m.id === movie.id)
+		)
+
+		const completeLibrary = [...uniqueMovies].sort(() => Math.random() - 0.5);
 
 		return (
 			<section className="w-fit space-y-9 m-auto">
