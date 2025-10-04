@@ -1,3 +1,5 @@
+import { NavItem } from "./movie-utils";
+
 export type Book = {
 	title: string;
 	author: string;
@@ -137,4 +139,115 @@ export const booksGenres = [
 	"Teatro",
 	"Viajes",
 	"Cocina"
+];
+
+// import { BookText, Clapperboard, ChefHat, Quote, Brain, Palette, TrendingUp, HeartHandshake, Cpu, Microscope, Ghost, Users, Map as MapIcon, List, Sparkles, BookOpen, Rocket, HatGlasses, Heart, Calendar, UserCircle } from 'lucide-react';
+
+
+export const booksGenresNav: NavItem[] = [
+	{
+		name: "Todos",
+		url: "/books",
+		icon: "List",
+	},
+	{
+		name: "Fantasia",
+		url: "/books/fantasy",
+		icon: "Sparkles",
+	},
+	{
+		name: "Ficción",
+		url: "/books/fiction",
+		icon: "BookOpen",
+	},
+	{
+		name: "SciFi",
+		url: "/books/scifi",
+		icon: "Rocket",
+	},
+	{
+		name: "Mystery",
+		url: "/books/mystery",
+		icon: "HatGlasses",
+	},
+	{
+		name: "Romance",
+		url: "/books/romance",
+		icon: "Heart",
+	},
+	{
+		name: "History",
+		url: "/books/history",
+		icon: "Calendar",
+	},
+	{
+		name: "Biography",
+		url: "/books/biography",
+		icon: "UserCircle",
+	},
+	{
+		name: "No Ficción",
+		url: "/books/no-fiction",
+		icon: "BookText",
+	},
+	{
+		name: "Terror",
+		url: "/books/terror",
+		icon: "Ghost",
+	},
+	{
+		name: "Young Adult",
+		url: "/books/young-adult",
+		icon: "Users",
+	},
+	{
+		name: "Ciencia",
+		url: "/books/science",
+		icon: "Microscope",
+	},
+	{
+		name: "Tecnología",
+		url: "/books/technology",
+		icon: "Cpu",
+	},
+	{
+		name: "Autoayuda",
+		url: "/books/self-help",
+		icon: "HeartHandshake",
+	},
+	{
+		name: "Negocios",
+		url: "/books/business",
+		icon: "TrendingUp",
+	},
+	{
+		name: "Arte",
+		url: "/books/art",
+		icon: "Palette",
+	},
+	{
+		name: "Filosofía",
+		url: "/books/philosophy",
+		icon: "Brain",
+	},
+	{
+		name: "Poesía",
+		url: "/books/poetry",
+		icon: "Quote",
+	},
+	{
+		name: "Teatro",
+		url: "/books/theatre",
+		icon: "Clapperboard",
+	},
+	{
+		name: "Viajes",
+		url: "/books/travel",
+		icon: "MapIcon",
+	},
+	{
+		name: "Cocina",
+		url: "/books/kitchen",
+		icon: "ChefHat",
+	}
 ];

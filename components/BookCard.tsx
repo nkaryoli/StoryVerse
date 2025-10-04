@@ -29,7 +29,7 @@ export function BookCard({ book }: { book: Book }) {
             ) : (
                 <div className="w-full h-full bg-gray-800 rounded-md flex items-center justify-center">
                     <span className="text-white text-sm text-center px-2">
-                        book.title
+                        {book.title}
                     </span>
                 </div>
             )}

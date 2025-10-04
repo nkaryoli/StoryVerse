@@ -3,21 +3,28 @@
 import React, { useState, useEffect } from "react"
 import { motion } from "framer-motion"
 import Link from "next/link"
-import { LucideIcon } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { usePathname } from "next/navigation"
 
 interface NavItem {
 	name: string
 	url: string
-	icon: LucideIcon
+	icon?: keyof typeof ICON_MAP
 }
 
 interface NavBarProps {
 	items: NavItem[]
 	className?: string
-	primaryColor?: string // Nueva prop opcional
+	primaryColor?: string
 }
+
+import {
+	BookText, Clapperboard, ChefHat, Quote, Brain, Palette, TrendingUp, HeartHandshake, Cpu, Microscope, Ghost, Users, Map as MapIcon, List, Sparkles, BookOpen, Rocket, HatGlasses, Heart, Calendar, UserCircle, LucideIcon
+} from 'lucide-react';
+
+const ICON_MAP: Record<string, unknown> = {
+	BookText, Clapperboard, ChefHat, Quote, Brain, Palette, TrendingUp, HeartHandshake, Cpu, Microscope, Ghost, Users, MapIcon, List, Sparkles, BookOpen, Rocket, HatGlasses, Heart, Calendar, UserCircle
+};
 
 const CategoryNavbar = ({ items, className, primaryColor = "#FC3FFA" }: NavBarProps) => {
 	const pathname = usePathname()
@@ -49,7 +56,9 @@ const CategoryNavbar = ({ items, className, primaryColor = "#FC3FFA" }: NavBarPr
 		>
 			<div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6 xl:grid-cols-9 gap-2">
 				{items.map((item) => {
-					const Icon = item.icon
+					if (!item.icon) return null;
+					const Icon = ICON_MAP[item.icon] as LucideIcon;
+					if (!Icon) return null;
 					const isActive = activeTab === item.name
 
 					return (
@@ -59,28 +68,26 @@ const CategoryNavbar = ({ items, className, primaryColor = "#FC3FFA" }: NavBarPr
 							onClick={() => setActiveTab(item.name)}
 							className={cn(
 								"relative cursor-pointer text-sm font-medium py-2 px-3 rounded-md transition-colors flex justify-center items-center gap-2",
-								"text-foreground/80 hover:bg-muted/50 border "							)}
+								"text-foreground/80 hover:bg-muted/50 border ")}
 							style={{
 								color: isActive ? primaryColor : undefined,
 								borderColor: isActive ? `${primaryColor}20` : undefined
 							}}
 							onMouseEnter={(e) => {
-								// Aplicar color personalizado en hover
 								if (!isActive) {
 									e.currentTarget.style.color = primaryColor;
 								}
 							}}
 							onMouseLeave={(e) => {
-								// Restaurar color original al salir del hover
 								if (!isActive) {
 									e.currentTarget.style.color = '';
 								}
 							}}
 
 						>
-							<Icon 
-								size={18} 
-								strokeWidth={2.5} 
+							<Icon
+								size={18}
+								strokeWidth={2.5}
 								style={isActive ? { color: primaryColor } : {}}
 							/>
 							<span className="whitespace-nowrap truncate text-xs sm:text-sm">
@@ -104,15 +111,15 @@ const CategoryNavbar = ({ items, className, primaryColor = "#FC3FFA" }: NavBarPr
 									}}
 								>
 									{/* Efecto de "lámpara" solo en pantallas grandes */}
-									<div 
+									<div
 										className="absolute -top-2 left-1/2 -translate-x-1/2 w-6 h-1 rounded-t-full"
 										style={{ backgroundColor: primaryColor }}
 									>
-										<div 
+										<div
 											className="absolute w-8 h-4 rounded-full blur-sm -top-1 -left-1"
 											style={{ backgroundColor: `${primaryColor}20` }}
 										/>
-										<div 
+										<div
 											className="absolute w-6 h-4 rounded-full blur-sm -top-0.5"
 											style={{ backgroundColor: `${primaryColor}20` }}
 										/>
