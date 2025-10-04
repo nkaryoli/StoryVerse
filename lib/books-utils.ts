@@ -1,4 +1,5 @@
-import { NavItem } from "./movie-utils";
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { FilterItem } from "./movie-utils";
 
 export type Book = {
 	title: string;
@@ -20,33 +21,109 @@ export interface OpenLibraryBook {
 
 // search by categories
 
-export async function searchBooks(query: string, limit: number = 10) {
+export async function searchBooksByGenre(query: string, limit: number = 50) {
 	try {
+		// Pequeña pausa para no saturar la API
+		await new Promise(resolve => setTimeout(resolve, 500));
+
+		// Convertimos tus géneros a los que entiende Open Library
+		const genreMap: Record<string, string> = {
+			'fantasy': 'fantasy',
+			'fiction': 'fiction',
+			'scifi': 'science_fiction',
+			'mystery': 'mystery',
+			'romance': 'romance',
+			'history': 'history',
+			'biography': 'biography',
+			'non-fiction': 'nonfiction',
+			'terror': 'horror',
+			'young-adult': 'young_adult',
+			'science': 'science',
+			'technology': 'technology',
+			'self-help': 'self_help',
+			'business': 'business',
+			'art': 'art',
+			'philosophy': 'philosophy',
+			'poetry': 'poetry',
+			'theatre': 'drama',
+			'travel': 'travel',
+			'kitchen': 'cooking'
+		};
+
+		// Buscamos el género en nuestro mapeo
+		const openLibraryGenre = genreMap[query] || query;
+
+		// URL específica para géneros
 		const response = await fetch(
-			`https://openlibrary.org/search.json?q=${encodeURIComponent(
-				query
-			)}&limit=${limit}`,
-			{ signal: AbortSignal.timeout(5000) } // 5 segundos timeout
+			`https://openlibrary.org/subjects/${openLibraryGenre}.json?limit=100`,
+			{ signal: AbortSignal.timeout(15000) }
 		);
 
 		if (response.ok) {
 			const data = await response.json();
-			return data.docs.map((book: OpenLibraryBook) => ({
-				title: book.title,
-				author: book.author_name?.[0] || "Unknown",
-				cover: book.cover_i
-					? `https://covers.openlibrary.org/b/id/${book.cover_i}-M.jpg`
+			const works = data.works || [];
+
+			console.log(`📚 Encontrados ${works.length} libros de ${query}`);
+
+			const books = works.map((work: any) => ({
+				title: work.title,
+				author: work.authors?.[0]?.name || "Autor desconocido",
+				cover: work.cover_id 
+					? `https://covers.openlibrary.org/b/id/${work.cover_id}-M.jpg`
 					: null,
-				publishYear: book.first_publish_year,
-				isbn: book.isbn?.[0] || null,
-				key: book.key,
+				publishYear: work.first_publish_year,
+				isbn: work.availability?.isbn || null,
+				key: work.key,
 			}));
+			
+			// La respuesta de /subjects es diferente, usa "works"
+			return  books.slice(0, limit);
+		} else {
+			throw new Error(`Error HTTP: ${response.status}`);
 		}
 	} catch (error) {
-		console.log("OpenLibrary failed, using mock data", error);
+		console.log(`Error con Open Library, usando datos de ejemplo`, error);
+		// Usamos los datos de ejemplo si falla
+		return getMockBooks(query, limit);
+	}
+}
+
+export async function searchBooks(query: string, limit: number = 10) {
+	try {
+		// Delay aleatorio entre peticiones para evitar rate limiting de Open Library API
+		// y no cierre las conexiones por hacer demasiadas peticiones en poco tiempo
+		await new Promise(resolve => setTimeout(resolve, Math.random() * 1000 + 500));
+
+		const response = await fetch(
+			`https://openlibrary.org/search.json?q=${encodeURIComponent(
+				query
+			)}&limit=${limit}`,
+			{ signal: AbortSignal.timeout(10000) } // 10 segundos timeout
+		);
+
+		if (response.ok) {
+			const data = await response.json();
+			return (
+				data.docs.map((book: OpenLibraryBook) => ({
+					title: book.title,
+					author: book.author_name?.[0] || "Unknown",
+					cover: book.cover_i
+						? `https://covers.openlibrary.org/b/id/${book.cover_i}-M.jpg`
+						: null,
+					publishYear: book.first_publish_year,
+					isbn: book.isbn?.[0] || null,
+					key: book.key,
+				}))
+			)
+		} else {
+			console.warn(`⚠️ [OPEN LIBRARY] ${query}: HTTP ${response.status}`);
+			throw new Error(`HTTP ${response.status}`);
+		}
+	} catch (error) {
+		console.log(`OpenLibrary ${query} failed, using mock data`, error);
 	}
 
-	// Fallback a datos mock
+	// Fallback a datos mock en caso de que el request a la API falle
 	return getMockBooks(query, limit);
 }
 
@@ -120,7 +197,7 @@ async function getMockBooks(query: string, limit: number) {
 
 export const booksGenres = [
 	"Ficción",
-	"No Ficción", 
+	"No Ficción",
 	"Ciencia Ficción",
 	"Fantasía",
 	"Misterio",
@@ -141,10 +218,7 @@ export const booksGenres = [
 	"Cocina"
 ];
 
-// import { BookText, Clapperboard, ChefHat, Quote, Brain, Palette, TrendingUp, HeartHandshake, Cpu, Microscope, Ghost, Users, Map as MapIcon, List, Sparkles, BookOpen, Rocket, HatGlasses, Heart, Calendar, UserCircle } from 'lucide-react';
-
-
-export const booksGenresNav: NavItem[] = [
+export const bookFilters: FilterItem[] = [
 	{
 		name: "Todos",
 		url: "/books",
@@ -251,3 +325,31 @@ export const booksGenresNav: NavItem[] = [
 		icon: "ChefHat",
 	}
 ];
+
+export const genreTranslations: Record<string, string> = {
+	// Libros
+	'fantasy': 'Fantasía',
+	'fiction': 'Ficción',
+	'scifi': 'Ciencia Ficción',
+	'mystery': 'Misterio',
+	'romance': 'Romance',
+	'history': 'Historia',
+	'biography': 'Biografía',
+	'non-fiction': 'No Ficción',
+	'terror': 'Terror',
+	'young-adult': 'Juvenil',
+	'science': 'Ciencia',
+	'technology': 'Tecnología',
+	'self-help': 'Autoayuda',
+	'business': 'Negocios',
+	'art': 'Arte',
+	'philosophy': 'Filosofía',
+	'poetry': 'Poesía',
+	'theatre': 'Teatro',
+	'travel': 'Viajes',
+	'kitchen': 'Cocina',
+};
+
+export function translateGenre(englishGenre: string): string {
+	return genreTranslations[englishGenre.toLowerCase()] || englishGenre;
+}

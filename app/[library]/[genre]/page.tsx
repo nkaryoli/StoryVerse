@@ -1,6 +1,6 @@
 import { BookCard } from '@/components/BookCard';
 import { Movie, MovieCard } from '@/components/MovieCard';
-import { Book, searchBooks } from '@/lib/books-utils';
+import { Book, searchBooksByGenre, translateGenre } from '@/lib/books-utils';
 import { searchMovies } from '@/lib/movie-utils';
 import React from 'react'
 
@@ -16,14 +16,15 @@ const Category = async ({ params }: PageProps) => {
 	const { library, genre } = resolvedParams;
 
 	console.log('🔍 [CATEGORY PAGE] Params:', { library, genre });
-	
 	if (library === 'books') {
-		const books = await searchBooks(genre, 18);
+		
+		const books = await searchBooksByGenre(genre, 50);
+		const translatedGenre = translateGenre(genre);
 
 		return (
 			<section className="w-fit space-y-9 m-auto">
 				<h1 className="text-3xl font-bold text-white capitalize">
-					{genre}
+					{translatedGenre} ({books.length} libros)
 				</h1>
 				<div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4 md:gap-6">
 					{books.map((info: Book) => (

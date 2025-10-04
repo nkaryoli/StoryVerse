@@ -1,7 +1,7 @@
 import CategoryNavbar from '@/components/CategoryNavbar';
 import React from 'react'
-import { movieGenresNav } from '@/lib/movie-utils';
-import { booksGenresNav } from '@/lib/books-utils';
+import { movieFilters } from '@/lib/movie-utils';
+import { bookFilters } from '@/lib/books-utils';
 
 interface PageProps {
 	params: Promise<{
@@ -15,7 +15,7 @@ const LibraryLayout = async ({ params, children }: PageProps) => {
 
 	const library = resolvedParams.library;
 
-	const filters = library === 'books' ? booksGenresNav : movieGenresNav; 
+	const filters = library === 'books' ? bookFilters : movieFilters; 
 	const color = library === 'books' ? '#FC3FFA' : '#41C5FE'; 
 
 	return (

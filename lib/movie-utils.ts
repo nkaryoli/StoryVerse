@@ -162,22 +162,22 @@ export const movieGenres: MovieGenre[] = [
 	{ id: 878, name: "Ciencia Ficción" },
 ];
 
-// import {  Rocket, Sparkles, HatGlasses, Heart, Calendar, UserCircle, List, BookOpen } from 'lucide-react';
-export type NavItem = {
-  name: string;
-  url: string;
-  icon?: string; // sólo la key del icono
+export type FilterItem = {
+	name: string;
+	url: string;
+	icon?: string; 
 };
-export const movieGenresNav: NavItem[] = [
+
+export const movieFilters: FilterItem[] = [
 	{ name: "Todos", url: "/movies", icon: "List" },
-  { name: "Acción", url: "/movies/accion", icon: "Sparkles" },
-  { name: "Aventura", url: "/movies/aventura", icon: "BookOpen" },
-  { name: "Animacion", url: "/movies/animacion", icon: "Rocket" },
-  { name: "Comedia", url: "/movies/comedia", icon: "HatGlasses" },
-  { name: "Crimen", url: "/movies/crimen", icon: "Heart" },
-  { name: "Drama", url: "/movies/drama", icon: "Calendar" },
-  { name: "Fantasia", url: "/movies/fantasia", icon: "UserCircle" },
-  { name: "Terror", url: "/movies/terror", icon: "UserCircle" },
-  { name: "Romance", url: "/movies/romance", icon: "UserCircle" },
-  { name: "Ciencia Ficción", url: "/movies/ciencia-ficcion", icon: "UserCircle" },
+	{ name: "Acción", url: "/movies/accion", icon: "Sparkles" },
+	{ name: "Aventura", url: "/movies/aventura", icon: "BookOpen" },
+	{ name: "Animacion", url: "/movies/animacion", icon: "Rocket" },
+	{ name: "Comedia", url: "/movies/comedia", icon: "HatGlasses" },
+	{ name: "Crimen", url: "/movies/crimen", icon: "Heart" },
+	{ name: "Drama", url: "/movies/drama", icon: "Calendar" },
+	{ name: "Fantasia", url: "/movies/fantasia", icon: "UserCircle" },
+	{ name: "Terror", url: "/movies/terror", icon: "UserCircle" },
+	{ name: "Romance", url: "/movies/romance", icon: "UserCircle" },
+	{ name: "Ciencia Ficción", url: "/movies/ciencia-ficcion", icon: "UserCircle" },
 ];
