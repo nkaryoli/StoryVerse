@@ -1,7 +1,7 @@
 import { BookCard } from '@/components/BookCard';
 import { Movie, MovieCard } from '@/components/MovieCard';
 import { Book, BooksResponse, searchBooksByGenre, translateGenre } from '@/lib/books-utils';
-import { Pagination } from '@/components/Pagination';
+import { PaginationComponent } from '@/components/PaginationComponent';
 import { searchMovies } from '@/lib/movie-utils';
 import React from 'react'
 
@@ -49,7 +49,7 @@ const Category = async ({ params, searchParams }: PageProps) => {
 						<BookCard book={info} key={info.key}  />
 					))}
 				</div>
-				<Pagination 
+				<PaginationComponent
 					currentPage={currentPage}
 					hasMore={hasMore}
 					totalBooks={totalBooks}
